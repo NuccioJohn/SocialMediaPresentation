@@ -13,14 +13,15 @@ android {
     }
     buildTypes {
         release {
-//            runProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+           //runProguard false
+            //  proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.github.asne:asne-facebook:0.3.1'
     compile 'com.github.asne:asne-linkedin:0.3.1'

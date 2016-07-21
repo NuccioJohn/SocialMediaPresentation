@@ -3,12 +3,22 @@ package com.github.gorbin.asnetutorial;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class MainActivity extends ActionBarActivity implements FragmentManager.OnBackStackChangedListener {
@@ -79,6 +89,21 @@ public class MainActivity extends ActionBarActivity implements FragmentManager.O
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    public void printHashKey(View view) {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("MY PACKAGE NAME",     PackageManager.GET_SIGNATURES);
+            for (android.content.pm.Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String sign=Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.i("MY KEY HASH:", sign);
+                //Toast.makeText(getApplicationContext(),sign,     Toast.LENGTH_LONG).show();
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
         }
     }
 }
